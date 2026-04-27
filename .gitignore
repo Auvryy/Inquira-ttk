@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environment
+venv/
+.env
+.venv
+env/
+
+# IDE/Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Project specific
+*.db
+*.log
+
+# Pyright / Pylance
+.pyright/
+typings/
