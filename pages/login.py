@@ -1,129 +1,125 @@
-import ttkbootstrap as ttk
-from ttkbootstrap.constants import *
-from PIL import Image, ImageTk
+import customtkinter as ctk
+import tkinter as tk
+
+from app.theme_colors import Colors
 from components.primary_button import PrimaryButton
 from components.primary_entry import PrimaryEntry
-from app.theme_colors import Colors
+from components.secondary_button import SecondaryButton
+from components.link_label import LinkLabel
 
-class LoginPage(ttk.Frame):
+
+class LoginPage(ctk.CTkFrame):
     def __init__(self, parent, app):
-        super().__init__(parent, padding=0, style="Container.TFrame")
+        super().__init__(parent, fg_color=Colors.BACKGROUND)
         self.app = app
-        
-        self.columnconfigure(0, weight=6)
-        self.columnconfigure(1, weight=4)
+        self.columnconfigure(0, weight=1)
         self.rowconfigure(0, weight=1)
-        
-        # Left Image Section (60%)
-        self.image_frame = ttk.Frame(self, style="Container.TFrame")
-        self.image_frame.grid(row=0, column=0, sticky="nsew")
-        
-        try:
-            pil_image = Image.open("assets/images/geometry.jpeg")
-            self.bg_image = ImageTk.PhotoImage(pil_image)
-            self.image_label = ttk.Label(self.image_frame, image=self.bg_image)
-            self.image_label.place(relx=0.5, rely=0.5, anchor="center")
-            self.image_frame.bind("<Configure>", self._resize_image)
-        except Exception as e:
-            print(f"Error loading image: {e}")
-        
-        # Right Form Section (40%)
-        form_container = ttk.Frame(self, style="Container.TFrame")
-        form_container.grid(row=0, column=1, sticky="nsew")
-        form_container.columnconfigure(0, weight=1)
+
+        form_container = ctk.CTkFrame(self, fg_color=Colors.BACKGROUND)
+        form_container.grid(row=0, column=0, sticky="nsew", padx=32, pady=32)
         form_container.rowconfigure(0, weight=1)
-        
-        card_frame = ttk.Frame(form_container, style="Card.TFrame", padding=(40, 50))
-        card_frame.grid(row=0, column=0)
-        
-        ttk.Label(
+        form_container.columnconfigure(0, weight=1)
+
+        card_frame = ctk.CTkFrame(form_container, fg_color=Colors.SECONDARY_BG, corner_radius=16)
+        card_frame.grid(row=0, column=0, padx=12, pady=12)
+
+        title = ctk.CTkLabel(
             card_frame,
-            text="Welcome Back",
-            font=("Segoe UI", 24, "bold"),
-            foreground=Colors.TEXT_PRIMARY,
-            style="Card.TLabel"
-        ).pack(pady=(0, 10))
-        
-        ttk.Label(
+            text="Inquira",
+            text_color=Colors.PRIMARY_TEXT,
+            font=app.fonts["title"],
+        )
+        title.pack(pady=(24, 6), padx=30)
+
+        subtitle = ctk.CTkLabel(
             card_frame,
-            text="Please enter your details to sign in.",
-            font=("Segoe UI", 11),
-            foreground=Colors.TEXT_SECONDARY,
-            style="Card.TLabel"
-        ).pack(pady=(0, 30))
-        
-        self.email_entry = PrimaryEntry(card_frame, placeholder="Email or Username")
-        self.email_entry.pack(fill=X, pady=(0, 20), ipady=8)
-        
+            text=(
+                "Create and share surveys, or discover insights by answering others."
+            ),
+            text_color=Colors.SECONDARY,
+            font=app.fonts["small"],
+            wraplength=320,
+            justify="center",
+        )
+        subtitle.pack(pady=(0, 18), padx=24)
+
+        self.error_label = ctk.CTkLabel(
+            card_frame,
+            text="",
+            text_color=Colors.ERROR,
+            font=app.fonts["small"],
+        )
+        self.error_label.pack(pady=(0, 6))
+
+        self.username_entry = PrimaryEntry(card_frame, placeholder="Username")
+        self.username_entry.pack(fill="x", padx=28, pady=(0, 12))
+
         self.password_entry = PrimaryEntry(card_frame, placeholder="Password", is_password=True)
-        self.password_entry.pack(fill=X, pady=(0, 10), ipady=8)
-        
-        options_frame = ttk.Frame(card_frame, style="Card.TFrame")
-        options_frame.pack(fill=X, pady=(0, 25))
-        
-        self.show_password = ttk.BooleanVar()
-        ttk.Checkbutton(
+        self.password_entry.pack(fill="x", padx=28, pady=(0, 10))
+
+        options_frame = ctk.CTkFrame(card_frame, fg_color=Colors.SECONDARY_BG)
+        options_frame.pack(fill="x", padx=28, pady=(0, 18))
+
+        self.show_password = tk.BooleanVar(value=False)
+        show_toggle = ctk.CTkCheckBox(
             options_frame,
             text="Show password",
             variable=self.show_password,
+            text_color=Colors.SECONDARY_TEXT,
+            fg_color=Colors.ACCENT,
             command=self._toggle_password,
-            bootstyle="primary-round-toggle"
-        ).pack(side=LEFT)
-        
-        ttk.Label(
+        )
+        show_toggle.pack(side="left")
+
+        LinkLabel(
             options_frame,
             text="Forgot password?",
-            font=("Segoe UI", 10),
-            foreground=Colors.PRIMARY,
-            cursor="hand2",
-            style="Card.TLabel"
-        ).pack(side=RIGHT)
-        
-        login_btn = PrimaryButton(card_frame, text="Sign In", command=self._on_login)
-        login_btn.pack(fill=X, pady=(0, 20), ipady=5)
-        
-        register_frame = ttk.Frame(card_frame, style="Card.TFrame")
-        register_frame.pack()
-        
-        ttk.Label(
-            register_frame,
-            text="Don't have an account?",
-            font=("Segoe UI", 10),
-            foreground=Colors.TEXT_SECONDARY,
-            style="Card.TLabel"
-        ).pack(side=LEFT, padx=(0, 5))
-        
-        register_link = ttk.Label(
-            register_frame,
-            text="Create one",
-            font=("Segoe UI", 10, "bold"),
-            foreground=Colors.PRIMARY,
-            cursor="hand2",
-            style="Card.TLabel"
-        )
-        register_link.pack(side=LEFT)
-        register_link.bind("<Button-1>", lambda e: self.app.show_page("RegisterPage"))
+            command=self._forgot_password,
+            font=app.fonts["small"],
+        ).pack(side="right")
 
-    def _resize_image(self, event):
-        if not hasattr(self, "image_label"):
-            return
-        
-        try:
-            # We want to crop/scale image to fill the frame
-            pil_image = Image.open("assets/images/geometry.jpeg")
-            
-            # Simple resize for now to fit the frame dimensions
-            # For a proper cover effect, more complex math is needed. 
-            # Doing basic resize to frame height and width maintaining aspect ratio might warp or leave spaces,
-            # so stretching it:
-            new_image = pil_image.resize((event.width, event.height), Image.Resampling.LANCZOS)
-            self.bg_image = ImageTk.PhotoImage(new_image)
-            self.image_label.configure(image=self.bg_image)
-        except Exception:
-            pass
+        PrimaryButton(card_frame, text="Login", command=self._on_login).pack(
+            fill="x", padx=28, pady=(0, 12)
+        )
+
+        SecondaryButton(card_frame, text="Continue with Google", command=self._google_stub).pack(
+            fill="x", padx=28, pady=(0, 12)
+        )
+
+        footer = ctk.CTkFrame(card_frame, fg_color=Colors.SECONDARY_BG)
+        footer.pack(pady=(4, 22))
+
+        ctk.CTkLabel(
+            footer,
+            text="Don't have an account?",
+            text_color=Colors.SECONDARY_TEXT,
+            font=app.fonts["small"],
+        ).pack(side="left")
+        LinkLabel(
+            footer,
+            text="Register",
+            command=lambda: self.app.show_page("RegisterPage"),
+            font=app.fonts["small_bold"],
+        ).pack(side="left", padx=(6, 0))
 
     def _toggle_password(self):
         self.password_entry.set_password_mode(not self.show_password.get())
 
+    def _forgot_password(self):
+        self.error_label.configure(text="Password reset is not available in mock mode.")
+
+    def _google_stub(self):
+        self.error_label.configure(text="Google sign-in is disabled in desktop mode.")
+
     def _on_login(self):
-        pass
+        username = self.username_entry.get().strip()
+        password = self.password_entry.get().strip()
+
+        if not username or not password:
+            self.error_label.configure(text="Enter your username and password.")
+            return
+
+        if not self.app.login(username, password):
+            self.error_label.configure(text="Invalid credentials. Try demo/demo1234.")
+        else:
+            self.error_label.configure(text="")

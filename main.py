@@ -1,4 +1,9 @@
 from app.window import App
 
-if __name__ == "__main__":
+
+def main():
     App().mainloop()
+
+
+if __name__ == "__main__":
+    main()

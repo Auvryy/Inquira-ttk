@@ -3,15 +3,14 @@ import customtkinter as ctk
 from app.theme_colors import Colors
 
 
-class PrimaryButton(ctk.CTkButton):
+class LinkLabel(ctk.CTkLabel):
     def __init__(self, parent, text, command=None, **kwargs):
         super().__init__(
             parent,
             text=text,
-            command=command,
-            fg_color=Colors.PRIMARY,
-            hover_color=Colors.SHADED_PRIMARY,
-            text_color="white",
-            corner_radius=8,
+            text_color=Colors.ACCENT,
+            cursor="hand2",
             **kwargs,
         )
+        if command is not None:
+            self.bind("<Button-1>", lambda _event: command())

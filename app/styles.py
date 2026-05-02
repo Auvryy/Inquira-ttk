@@ -1,39 +1,36 @@
-import ttkbootstrap as ttk
+import customtkinter as ctk
+from tkinter import font
+
 from .theme_colors import Colors
 
 
-def setup_styles():
-    style = ttk.Style()
+def setup_theme():
+    ctk.set_appearance_mode("light")
+    ctk.set_default_color_theme("blue")
 
-    style.configure(
-        "Primary-Button",
-        font=("Segoe UI", 12),
-        foreground="white",
-        background=Colors.PRIMARY,
-    )
 
-    style.configure(
-        "Primary.TEntry",
-        relief="flat",
-        bordercolor=Colors.PRIMARY,
-        borderwidth=2,
-        fieldbackground="white",
-        foreground="#000000",
-        font=("Segoe UI", 11)
-    )
+def build_fonts(root):
+    families = set(font.families(root))
 
-    style.configure(
-        "Container.TFrame",
-        background=Colors.SURFACE
-    )
+    def pick_family(preferred):
+        for name in preferred:
+            if name in families:
+                return name
+        return "Segoe UI"
 
-    style.configure(
-        "Card.TFrame",
-        background=Colors.BACKGROUND,
-        relief="flat"
-    )
+    title_family = pick_family(["Giaza", "Poppins", "Segoe UI", "Arial"])
+    body_family = pick_family(["Poppins", "Segoe UI", "Arial"])
 
-    style.configure(
-        "Card.TLabel",
-        background=Colors.BACKGROUND
-    )
+    return {
+        "title": (title_family, 30, "bold"),
+        "title_md": (title_family, 22, "bold"),
+        "heading": (body_family, 18, "bold"),
+        "body": (body_family, 14, "normal"),
+        "body_bold": (body_family, 14, "bold"),
+        "small": (body_family, 12, "normal"),
+        "small_bold": (body_family, 12, "bold"),
+    }
+
+
+def surface_color():
+    return Colors.SECONDARY_BG

@@ -1,45 +1,23 @@
-import ttkbootstrap as ttk
-from ttkbootstrap.constants import *
+import customtkinter as ctk
+
+from app.theme_colors import Colors
 
 
-class PrimaryEntry(ttk.Entry):
-    """Reusable styled entry with thick black border."""
-    def __init__(self, parent, placeholder="", **kwargs):
-        # We extract is_password to manage the show="*" logic dynamically
-        self.is_password = kwargs.pop("is_password", False)
-        
-        # Use custom style "Styled.TEntry" and pass through kwargs
+class PrimaryEntry(ctk.CTkEntry):
+    def __init__(self, parent, placeholder="", is_password=False, **kwargs):
+        self.is_password = is_password
         super().__init__(
             parent,
-            style="Primary.TEntry",
-            **kwargs
+            placeholder_text=placeholder,
+            fg_color=Colors.INPUT,
+            text_color=Colors.PRIMARY_TEXT,
+            border_color=Colors.PRIMARY,
+            border_width=2,
+            corner_radius=8,
+            show="*" if is_password else "",
+            **kwargs,
         )
 
-        # Optional placeholder behavior
-        if placeholder:
-            self.placeholder = placeholder
-            self.insert(0, placeholder)
-            self.bind("<FocusIn>", self._on_focus_in)
-            self.bind("<FocusOut>", self._on_focus_out)
-
-    def _on_focus_in(self, event):
-        if super().get() == getattr(self, "placeholder", ""):
-            self.delete(0, "end")
-            if getattr(self, "is_password", False):
-                self.configure(show="*")
-
-    def _on_focus_out(self, event):
-        if super().get() == "":
-            if getattr(self, "is_password", False):
-                self.configure(show="")
-            self.insert(0, getattr(self, "placeholder", ""))
-            
     def set_password_mode(self, is_pwd):
-        """Allows dynamically toggling the password mode (e.g. via a Checkbutton)"""
         self.is_password = is_pwd
-        if super().get() != getattr(self, "placeholder", ""):
-            self.configure(show="*" if is_pwd else "")
-
-    def get(self):
-        value = super().get()
-        return value if value != getattr(self, "placeholder", "") else ""
+        self.configure(show="*" if is_pwd else "")

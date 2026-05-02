@@ -1,0 +1,240 @@
+{
+  "users": [
+    {
+      "username": "demo",
+      "password": "demo1234",
+      "role": "user",
+      "email": null,
+      "school": null,
+      "program": null,
+      "profile_pic": null
+    },
+    {
+      "username": "andy",
+      "password": "Andy1968",
+      "role": "user",
+      "email": null,
+      "school": null,
+      "program": null,
+      "profile_pic": null
+    }
+  ],
+  "surveys": [
+    {
+      "id": "survey-1777663911",
+      "title": "adfs",
+      "caption": "adsf",
+      "description": "adsf",
+      "time_to_complete": 3,
+      "tags": [
+        "Health"
+      ],
+      "target_audience": [
+        "Researchers"
+      ],
+      "creator": "andy",
+      "created_at": "2026-05-02T03:31:51.719073",
+      "status": true,
+      "approved": true,
+      "archived": false,
+      "responses": 0,
+      "num_likes": 1,
+      "liked_by": [
+        "andy"
+      ],
+      "questions": [
+        {
+          "id": "q-1",
+          "text": "asdfasdf",
+          "type": "shortText",
+          "required": true,
+          "options": [],
+          "min_choice": null,
+          "max_choice": null,
+          "max_rating": null,
+          "image_path": null,
+          "video_url": null,
+          "order": 0,
+          "section_id": "section-1"
+        },
+        {
+          "id": "q-2",
+          "text": "asdfasdfa",
+          "type": "radioButton",
+          "required": true,
+          "options": [
+            "asdf",
+            "asdf"
+          ],
+          "min_choice": null,
+          "max_choice": null,
+          "max_rating": null,
+          "image_path": null,
+          "video_url": null,
+          "order": 1,
+          "section_id": "section-1"
+        },
+        {
+          "id": "q-3",
+          "text": "asdfasdf",
+          "type": "number",
+          "required": true,
+          "options": [
+            "asdfasdfa"
+          ],
+          "min_choice": null,
+          "max_choice": null,
+          "max_rating": null,
+          "image_path": null,
+          "video_url": null,
+          "order": 2,
+          "section_id": "section-1"
+        }
+      ],
+      "sections": [
+        {
+          "id": "section-1",
+          "title": "Section 1",
+          "description": "",
+          "order": 1
+        }
+      ]
+    },
+    {
+      "id": "survey-1",
+      "title": "Understanding Student Research Habits",
+      "caption": "Help us learn how students discover research topics.",
+      "description": "We want to know how students find and evaluate research ideas.",
+      "time_to_complete": 10,
+      "tags": [
+        "Academic",
+        "Research"
+      ],
+      "target_audience": [
+        "Students",
+        "Researchers"
+      ],
+      "creator": "demo",
+      "created_at": "2026-05-02T03:26:05.802832",
+      "status": true,
+      "approved": true,
+      "archived": false,
+      "responses": 13,
+      "num_likes": 5,
+      "liked_by": [
+        "andy"
+      ],
+      "questions": [
+        {
+          "id": "q-1",
+          "text": "What motivates you to participate in surveys?",
+          "type": "longText",
+          "required": true,
+          "options": [],
+          "min_choice": null,
+          "max_choice": null,
+          "max_rating": null,
+          "image_path": null,
+          "video_url": null,
+          "order": 0,
+          "section_id": "section-1"
+        },
+        {
+          "id": "q-2",
+          "text": "How often do you answer online surveys?",
+          "type": "radioButton",
+          "required": true,
+          "options": [
+            "Daily",
+            "Weekly",
+            "Monthly",
+            "Rarely"
+          ],
+          "min_choice": null,
+          "max_choice": null,
+          "max_rating": null,
+          "image_path": null,
+          "video_url": null,
+          "order": 1,
+          "section_id": "section-1"
+        }
+      ],
+      "sections": [
+        {
+          "id": "section-1",
+          "title": "General",
+          "description": "",
+          "order": 1
+        }
+      ]
+    },
+    {
+      "id": "survey-2",
+      "title": "Campus Technology Access",
+      "caption": "Share how you access digital tools for schoolwork.",
+      "description": "This survey explores device access and study habits.",
+      "time_to_complete": 5,
+      "tags": [
+        "Technology",
+        "Academic"
+      ],
+      "target_audience": [
+        "Students"
+      ],
+      "creator": "demo",
+      "created_at": "2026-05-02T03:26:05.802857",
+      "status": true,
+      "approved": true,
+      "archived": false,
+      "responses": 7,
+      "num_likes": 2,
+      "liked_by": [],
+      "questions": [
+        {
+          "id": "q-1",
+          "text": "What motivates you to participate in surveys?",
+          "type": "longText",
+          "required": true,
+          "options": [],
+          "min_choice": null,
+          "max_choice": null,
+          "max_rating": null,
+          "image_path": null,
+          "video_url": null,
+          "order": 0,
+          "section_id": "section-1"
+        },
+        {
+          "id": "q-2",
+          "text": "How often do you answer online surveys?",
+          "type": "radioButton",
+          "required": true,
+          "options": [
+            "Daily",
+            "Weekly",
+            "Monthly",
+            "Rarely"
+          ],
+          "min_choice": null,
+          "max_choice": null,
+          "max_rating": null,
+          "image_path": null,
+          "video_url": null,
+          "order": 1,
+          "section_id": "section-1"
+        }
+      ],
+      "sections": [
+        {
+          "id": "section-1",
+          "title": "General",
+          "description": "",
+          "order": 1
+        }
+      ]
+    }
+  ],
+  "session": {},
+  "drafts": {},
+  "responses": {}
+}
