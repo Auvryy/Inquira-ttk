@@ -1,6 +1,7 @@
 import customtkinter as ctk
 
 from app.theme_colors import Colors
+from app.scroll_utils import bind_scroll_wheel
 from components.survey_card import SurveyCard
 from pages.take_survey import TakeSurveyWindow
 
@@ -34,6 +35,7 @@ class LikedSurveysPage(ctk.CTkFrame):
         self.scroll = ctk.CTkScrollableFrame(self, fg_color=Colors.SURFACE)
         self.scroll.grid(row=1, column=0, sticky="nsew", padx=24, pady=(0, 24))
         self.scroll.columnconfigure(0, weight=1)
+        bind_scroll_wheel(self.scroll)
 
     def on_show(self):
         self.refresh()

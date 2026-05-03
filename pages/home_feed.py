@@ -1,6 +1,7 @@
 import customtkinter as ctk
 
 from app.theme_colors import Colors
+from app.scroll_utils import bind_scroll_wheel
 from components.filter_chip import FilterChip
 from components.survey_card import SurveyCard
 from pages.take_survey import TakeSurveyWindow
@@ -20,6 +21,7 @@ class HomeFeedPage(ctk.CTkFrame):
         self.scroll = ctk.CTkScrollableFrame(self, fg_color=Colors.SURFACE)
         self.scroll.grid(row=0, column=0, sticky="nsew", padx=24, pady=24)
         self.scroll.columnconfigure(0, weight=1)
+        bind_scroll_wheel(self.scroll)
 
     def on_show(self):
         self.refresh()

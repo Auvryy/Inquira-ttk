@@ -67,7 +67,7 @@ class CreateSurveyPage(ctk.CTkFrame):
         self.step_title.grid(row=1, column=0, sticky="w", pady=(2, 0))
 
         self.step_container = ctk.CTkFrame(self, fg_color=Colors.SURFACE)
-        self.step_container.grid(row=1, column=0, sticky="nsew", padx=24)
+        self.step_container.grid(row=1, column=0, sticky="nsew", padx=24, pady=(0, 12))
         self.step_container.columnconfigure(0, weight=1)
 
         self.footer = ctk.CTkFrame(self, fg_color=Colors.SURFACE)
@@ -125,16 +125,42 @@ class CreateSurveyPage(ctk.CTkFrame):
         frame.grid(row=0, column=0, sticky="nsew")
         frame.columnconfigure(0, weight=1)
 
-        self.title_entry = PrimaryEntry(frame, placeholder="Survey Title")
+        content = ctk.CTkFrame(frame, fg_color=Colors.CARD)
+        content.grid(row=0, column=0, sticky="nsew", padx=24, pady=22)
+        content.columnconfigure(0, weight=1)
+
+        content = ctk.CTkFrame(frame, fg_color=Colors.CARD)
+        content.grid(row=0, column=0, sticky="nsew", padx=24, pady=22)
+        content.columnconfigure(0, weight=1)
+
+        ctk.CTkLabel(
+            content,
+            text="Survey title",
+            text_color=Colors.TEXT_DARK,
+            font=self.app.fonts["small_bold"],
+        ).grid(row=0, column=0, sticky="w")
+        self.title_entry = PrimaryEntry(content, placeholder="e.g. Campus Technology Access")
         self.title_entry.insert(0, self.draft.title)
-        self.title_entry.grid(row=0, column=0, sticky="ew", pady=(0, 10))
+        self.title_entry.grid(row=1, column=0, sticky="ew", pady=(6, 12))
 
-        self.caption_entry = PrimaryEntry(frame, placeholder="Caption")
+        ctk.CTkLabel(
+            content,
+            text="Caption",
+            text_color=Colors.TEXT_DARK,
+            font=self.app.fonts["small_bold"],
+        ).grid(row=2, column=0, sticky="w")
+        self.caption_entry = PrimaryEntry(content, placeholder="Short summary for the feed")
         self.caption_entry.insert(0, self.draft.caption)
-        self.caption_entry.grid(row=1, column=0, sticky="ew", pady=(0, 10))
+        self.caption_entry.grid(row=3, column=0, sticky="ew", pady=(6, 12))
 
+        ctk.CTkLabel(
+            content,
+            text="Description",
+            text_color=Colors.TEXT_DARK,
+            font=self.app.fonts["small_bold"],
+        ).grid(row=4, column=0, sticky="w")
         self.description_box = ctk.CTkTextbox(
-            frame,
+            content,
             height=120,
             fg_color=Colors.SURFACE,
             text_color=Colors.TEXT_DARK,
@@ -143,14 +169,14 @@ class CreateSurveyPage(ctk.CTkFrame):
         )
         if self.draft.description:
             self.description_box.insert("1.0", self.draft.description)
-        self.description_box.grid(row=2, column=0, sticky="ew", pady=(0, 14))
+        self.description_box.grid(row=5, column=0, sticky="ew", pady=(6, 16))
 
-        time_frame = ctk.CTkFrame(frame, fg_color=Colors.CARD)
-        time_frame.grid(row=3, column=0, sticky="w", pady=(0, 12))
+        time_frame = ctk.CTkFrame(content, fg_color=Colors.CARD)
+        time_frame.grid(row=6, column=0, sticky="w", pady=(0, 12))
         ctk.CTkLabel(
             time_frame,
-            text="Approximate time:",
-            text_color=Colors.SECONDARY_TEXT,
+            text="Approximate time",
+            text_color=Colors.TEXT_MUTED,
             font=self.app.fonts["small"],
         ).pack(side="left", padx=(0, 10))
         self.time_menu = ctk.CTkOptionMenu(
@@ -160,12 +186,12 @@ class CreateSurveyPage(ctk.CTkFrame):
         self.time_menu.set(str(self.draft.time_to_complete))
         self.time_menu.pack(side="left")
 
-        tags_frame = ctk.CTkFrame(frame, fg_color=Colors.CARD)
-        tags_frame.grid(row=4, column=0, sticky="w")
+        tags_frame = ctk.CTkFrame(content, fg_color=Colors.CARD)
+        tags_frame.grid(row=7, column=0, sticky="w")
         ctk.CTkLabel(
             tags_frame,
-            text="Tags (max 3):",
-            text_color=Colors.SECONDARY_TEXT,
+            text="Tags (max 3)",
+            text_color=Colors.TEXT_MUTED,
             font=self.app.fonts["small"],
         ).grid(row=0, column=0, sticky="w")
 
@@ -192,15 +218,19 @@ class CreateSurveyPage(ctk.CTkFrame):
         frame.grid(row=0, column=0, sticky="nsew")
         frame.columnconfigure(0, weight=1)
 
+        content = ctk.CTkFrame(frame, fg_color=Colors.CARD)
+        content.grid(row=0, column=0, sticky="nsew", padx=24, pady=22)
+        content.columnconfigure(0, weight=1)
+
         ctk.CTkLabel(
-            frame,
-            text="Select up to 5 audiences:",
-            text_color=Colors.SECONDARY_TEXT,
+            content,
+            text="Select up to 5 audiences",
+            text_color=Colors.TEXT_MUTED,
             font=self.app.fonts["small"],
         ).grid(row=0, column=0, sticky="w", pady=(0, 8))
 
         self.audience_chips = []
-        chip_container = ctk.CTkFrame(frame, fg_color=Colors.CARD)
+        chip_container = ctk.CTkFrame(content, fg_color=Colors.CARD)
         chip_container.grid(row=1, column=0, sticky="w")
 
         for idx, audience in enumerate(self.available_audiences):
@@ -209,8 +239,15 @@ class CreateSurveyPage(ctk.CTkFrame):
             chip.grid(row=idx // 2, column=idx % 2, padx=6, pady=6)
             self.audience_chips.append(chip)
 
-        custom_frame = ctk.CTkFrame(frame, fg_color=Colors.CARD)
-        custom_frame.grid(row=2, column=0, sticky="w", pady=(12, 0))
+        ctk.CTkLabel(
+            content,
+            text="Custom audience",
+            text_color=Colors.TEXT_DARK,
+            font=self.app.fonts["small_bold"],
+        ).grid(row=2, column=0, sticky="w", pady=(12, 6))
+
+        custom_frame = ctk.CTkFrame(content, fg_color=Colors.CARD)
+        custom_frame.grid(row=3, column=0, sticky="w")
 
         self.custom_audience_entry = PrimaryEntry(custom_frame, placeholder="Add custom audience")
         self.custom_audience_entry.pack(side="left", padx=(0, 8))
@@ -237,17 +274,33 @@ class CreateSurveyPage(ctk.CTkFrame):
         frame.grid(row=0, column=0, sticky="nsew")
         frame.columnconfigure(0, weight=1)
 
+        content = ctk.CTkFrame(frame, fg_color=Colors.CARD)
+        content.grid(row=0, column=0, sticky="nsew", padx=24, pady=22)
+        content.columnconfigure(0, weight=1)
+
+        header_row = ctk.CTkFrame(content, fg_color=Colors.CARD)
+        header_row.grid(row=0, column=0, sticky="ew", pady=(0, 12))
+        header_row.columnconfigure(0, weight=1)
+
+        ctk.CTkLabel(
+            header_row,
+            text="Survey questions",
+            text_color=Colors.TEXT_DARK,
+            font=self.app.fonts["body_bold"],
+        ).grid(row=0, column=0, sticky="w")
+
         ctk.CTkButton(
-            frame,
+            header_row,
             text="Add Question",
             fg_color=Colors.CUSTOM_BLUE,
             hover_color=Colors.BLUE,
             text_color=Colors.CARD,
             command=self._open_question_dialog,
             width=140,
-        ).grid(row=0, column=0, sticky="w", pady=(0, 12))
+            height=32,
+        ).grid(row=0, column=1, sticky="e")
 
-        self.questions_container = ctk.CTkFrame(frame, fg_color=Colors.CARD)
+        self.questions_container = ctk.CTkFrame(content, fg_color=Colors.CARD)
         self.questions_container.grid(row=1, column=0, sticky="nsew")
         self.questions_container.columnconfigure(0, weight=1)
         self._render_questions()
@@ -260,7 +313,7 @@ class CreateSurveyPage(ctk.CTkFrame):
             ctk.CTkLabel(
                 self.questions_container,
                 text="No questions yet. Add your first question.",
-                text_color=Colors.SECONDARY_TEXT,
+                text_color=Colors.TEXT_MUTED,
                 font=self.app.fonts["small"],
             ).grid(row=0, column=0, pady=20)
             return
@@ -279,7 +332,7 @@ class CreateSurveyPage(ctk.CTkFrame):
             ctk.CTkLabel(
                 card,
                 text=f"{idx + 1}. {question.text}",
-                text_color=Colors.PRIMARY_TEXT,
+                text_color=Colors.TEXT_DARK,
                 font=self.app.fonts["small_bold"],
                 wraplength=620,
                 justify="left",
@@ -288,7 +341,7 @@ class CreateSurveyPage(ctk.CTkFrame):
             ctk.CTkLabel(
                 card,
                 text=f"Type: {question.type.display_name()}",
-                text_color=Colors.SECONDARY_TEXT,
+                text_color=Colors.TEXT_MUTED,
                 font=self.app.fonts["small"],
             ).grid(row=1, column=0, sticky="w", padx=12)
 
@@ -326,9 +379,9 @@ class CreateSurveyPage(ctk.CTkFrame):
         ]
 
         ctk.CTkLabel(
-            frame,
+            content,
             text="\n".join(summary),
-            text_color=Colors.PRIMARY_TEXT,
+            text_color=Colors.TEXT_DARK,
             font=self.app.fonts["body"],
             justify="left",
         ).grid(row=0, column=0, sticky="w")
@@ -441,65 +494,195 @@ class CreateSurveyPage(ctk.CTkFrame):
 class QuestionDialog(ctk.CTkToplevel):
     def __init__(self, parent, on_save):
         super().__init__(parent)
+        self.app = parent.app
         self.on_save = on_save
+        self.options = []
+        self.choice_types = {QuestionType.RADIO, QuestionType.CHECKBOX, QuestionType.DROPDOWN}
+
         self.title("Add Question")
-        self.geometry("520x540")
-        self.configure(fg_color=Colors.BACKGROUND)
+        self.geometry("560x620")
+        self.configure(fg_color=Colors.SURFACE)
+
+        card = ctk.CTkFrame(
+            self,
+            fg_color=Colors.CARD,
+            corner_radius=16,
+            border_width=1,
+            border_color=Colors.BORDER_LIGHT,
+        )
+        card.pack(fill="both", expand=True, padx=18, pady=18)
+        card.columnconfigure(0, weight=1)
 
         ctk.CTkLabel(
-            self,
+            card,
             text="New Question",
-            text_color=Colors.PRIMARY_TEXT,
-            font=("Poppins", 18, "bold"),
-        ).pack(pady=(16, 8))
+            text_color=Colors.TEXT_DARK,
+            font=self.app.fonts["heading"],
+        ).pack(anchor="w", padx=20, pady=(18, 10))
 
-        self.question_entry = PrimaryEntry(self, placeholder="Question text")
-        self.question_entry.pack(fill="x", padx=24, pady=(0, 12))
+        ctk.CTkLabel(
+            card,
+            text="Question text",
+            text_color=Colors.TEXT_DARK,
+            font=self.app.fonts["small_bold"],
+        ).pack(anchor="w", padx=20)
+        self.question_entry = PrimaryEntry(card, placeholder="Type your question")
+        self.question_entry.pack(fill="x", padx=20, pady=(6, 12))
 
+        ctk.CTkLabel(
+            card,
+            text="Question type",
+            text_color=Colors.TEXT_DARK,
+            font=self.app.fonts["small_bold"],
+        ).pack(anchor="w", padx=20)
         self.type_menu = ctk.CTkOptionMenu(
-            self,
+            card,
             values=[q.display_name() for q in QuestionType],
+            command=self._on_type_change,
         )
-        self.type_menu.pack(padx=24, pady=(0, 12))
+        self.type_menu.pack(fill="x", padx=20, pady=(6, 12))
 
         self.required_var = tk.BooleanVar(value=False)
         ctk.CTkCheckBox(
-            self,
+            card,
             text="Required",
             variable=self.required_var,
-            fg_color=Colors.ACCENT,
-            text_color=Colors.SECONDARY_TEXT,
-        ).pack(anchor="w", padx=24, pady=(0, 12))
+            fg_color=Colors.CUSTOM_BLUE,
+            text_color=Colors.TEXT_MUTED,
+        ).pack(anchor="w", padx=20, pady=(0, 12))
+
+        self.options_section = ctk.CTkFrame(card, fg_color=Colors.CARD)
+        self.options_section.columnconfigure(0, weight=1)
 
         ctk.CTkLabel(
-            self,
-            text="Options (one per line for choice-based questions)",
-            text_color=Colors.SECONDARY_TEXT,
-            font=("Poppins", 11),
-        ).pack(anchor="w", padx=24)
+            self.options_section,
+            text="Options",
+            text_color=Colors.TEXT_DARK,
+            font=self.app.fonts["small_bold"],
+        ).grid(row=0, column=0, sticky="w")
 
-        self.options_box = ctk.CTkTextbox(self, height=120, fg_color=Colors.INPUT)
-        self.options_box.pack(fill="x", padx=24, pady=(4, 12))
+        option_row = ctk.CTkFrame(self.options_section, fg_color=Colors.CARD)
+        option_row.grid(row=1, column=0, sticky="ew", pady=(6, 8))
+        option_row.columnconfigure(0, weight=1)
+
+        self.option_entry = PrimaryEntry(option_row, placeholder="Add option")
+        self.option_entry.grid(row=0, column=0, sticky="ew", padx=(0, 8))
+        self.option_entry.bind("<Return>", lambda _e: self._add_option())
 
         ctk.CTkButton(
-            self,
+            option_row,
             text="Add",
-            fg_color=Colors.PRIMARY,
-            hover_color=Colors.SHADED_PRIMARY,
-            text_color=Colors.BACKGROUND,
+            fg_color=Colors.CUSTOM_BLUE,
+            hover_color=Colors.BLUE,
+            text_color=Colors.CARD,
+            command=self._add_option,
+            width=80,
+        ).grid(row=0, column=1)
+
+        self.options_list = ctk.CTkFrame(self.options_section, fg_color=Colors.CARD)
+        self.options_list.grid(row=2, column=0, sticky="ew")
+        self.options_list.columnconfigure(0, weight=1)
+
+        self._toggle_options_section(self._selected_type())
+        self._render_options()
+
+        ctk.CTkButton(
+            card,
+            text="Add",
+            fg_color=Colors.CUSTOM_BLUE,
+            hover_color=Colors.BLUE,
+            text_color=Colors.CARD,
             command=self._save,
-        ).pack(fill="x", padx=24, pady=(0, 18))
+            height=36,
+        ).pack(fill="x", padx=20, pady=(8, 18))
+
+    def _selected_type(self):
+        type_label = self.type_menu.get()
+        return next(
+            (q for q in QuestionType if q.display_name() == type_label),
+            QuestionType.SHORT_TEXT,
+        )
+
+    def _on_type_change(self, value):
+        question_type = next(
+            (q for q in QuestionType if q.display_name() == value),
+            QuestionType.SHORT_TEXT,
+        )
+        self._toggle_options_section(question_type)
+
+    def _toggle_options_section(self, question_type):
+        if question_type in self.choice_types:
+            if not self.options_section.winfo_ismapped():
+                self.options_section.pack(fill="x", padx=20, pady=(0, 12))
+        else:
+            self.options_section.pack_forget()
+
+    def _add_option(self):
+        option = self.option_entry.get().strip()
+        if not option:
+            return
+        self.options.append(option)
+        self.option_entry.delete(0, "end")
+        self._render_options()
+
+    def _remove_option(self, index):
+        if index < 0 or index >= len(self.options):
+            return
+        self.options.pop(index)
+        self._render_options()
+
+    def _render_options(self):
+        for child in self.options_list.winfo_children():
+            child.destroy()
+
+        if not self.options:
+            ctk.CTkLabel(
+                self.options_list,
+                text="No options added yet.",
+                text_color=Colors.TEXT_MUTED,
+                font=self.app.fonts["small"],
+            ).grid(row=0, column=0, sticky="w", pady=(0, 6))
+            return
+
+        for idx, option in enumerate(self.options):
+            row = ctk.CTkFrame(
+                self.options_list,
+                fg_color=Colors.SURFACE,
+                corner_radius=10,
+                border_width=1,
+                border_color=Colors.BORDER_LIGHT,
+            )
+            row.grid(row=idx, column=0, sticky="ew", pady=4)
+            row.columnconfigure(0, weight=1)
+
+            ctk.CTkLabel(
+                row,
+                text=option,
+                text_color=Colors.TEXT_DARK,
+                font=self.app.fonts["small"],
+            ).grid(row=0, column=0, sticky="w", padx=10, pady=6)
+
+            ctk.CTkButton(
+                row,
+                text="Remove",
+                fg_color=Colors.SURFACE,
+                hover_color=Colors.SIDEBAR_HOVER,
+                text_color=Colors.TEXT_DARK,
+                border_width=1,
+                border_color=Colors.BORDER_LIGHT,
+                command=lambda i=idx: self._remove_option(i),
+                width=90,
+                height=26,
+            ).grid(row=0, column=1, padx=8, pady=6)
 
     def _save(self):
         text = self.question_entry.get().strip()
         if not text:
             messagebox.showwarning("Validation", "Question text is required.")
             return
-        type_label = self.type_menu.get()
-        question_type = next((q for q in QuestionType if q.display_name() == type_label), QuestionType.SHORT_TEXT)
-        options_text = self.options_box.get("1.0", "end").strip()
-        options = [line.strip() for line in options_text.splitlines() if line.strip()]
-        if question_type in (QuestionType.RADIO, QuestionType.CHECKBOX, QuestionType.DROPDOWN) and len(options) < 2:
+        question_type = self._selected_type()
+        options = list(self.options)
+        if question_type in self.choice_types and len(options) < 2:
             messagebox.showwarning("Validation", "Add at least two options for this question type.")
             return
         self.on_save(text, question_type, options, self.required_var.get())

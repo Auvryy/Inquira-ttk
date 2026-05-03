@@ -3,6 +3,7 @@ import tkinter as tk
 from tkinter import messagebox
 
 from app.theme_colors import Colors
+from app.scroll_utils import bind_scroll_wheel
 from models.question_type import QuestionType
 
 
@@ -36,6 +37,7 @@ class TakeSurveyWindow(ctk.CTkToplevel):
         scroll = ctk.CTkScrollableFrame(self, fg_color=Colors.BACKGROUND)
         scroll.pack(fill="both", expand=True, padx=20, pady=10)
         scroll.columnconfigure(0, weight=1)
+        bind_scroll_wheel(scroll)
 
         if not survey.questions:
             ctk.CTkLabel(

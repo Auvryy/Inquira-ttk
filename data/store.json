@@ -234,7 +234,34 @@
       ]
     }
   ],
-  "session": {},
-  "drafts": {},
+  "session": {
+    "current_user": "andy"
+  },
+  "drafts": {
+    "andy": {
+      "title": "adsf",
+      "caption": "assdf",
+      "description": "asdfasdf",
+      "time_to_complete": 10,
+      "tags": [
+        "Academic"
+      ],
+      "target_audience": [
+        "Students",
+        "Business Students",
+        "Educators"
+      ],
+      "questions": [],
+      "sections": [
+        {
+          "id": "section-1",
+          "title": "Section 1",
+          "description": "",
+          "order": 1
+        }
+      ],
+      "bypass_code": null
+    }
+  },
   "responses": {}
 }

@@ -4,6 +4,7 @@ from PIL import Image
 import customtkinter as ctk
 
 from app.theme_colors import Colors
+from app.scroll_utils import bind_scroll_wheel
 from components.primary_button import PrimaryButton
 from components.secondary_button import SecondaryButton
 
@@ -59,6 +60,7 @@ class LandingPage(ctk.CTkFrame):
         self.scroll = ctk.CTkScrollableFrame(self, fg_color="white", corner_radius=0)
         self.scroll.grid(row=1, column=0, sticky="nsew")
         self.scroll.columnconfigure(0, weight=1)
+        bind_scroll_wheel(self.scroll)
 
     def _build_sections(self):
         self.sections = {}
