@@ -9,9 +9,9 @@ class PrimaryButton(ctk.CTkButton):
             parent,
             text=text,
             command=command,
-            fg_color=Colors.PRIMARY,
-            hover_color=Colors.SHADED_PRIMARY,
+            fg_color=Colors.CUSTOM_BLUE,
+            hover_color=Colors.BLUE,
             text_color="white",
-            corner_radius=8,
+            corner_radius=10,
             **kwargs,
         )

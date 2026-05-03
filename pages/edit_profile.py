@@ -14,7 +14,7 @@ class EditProfileWindow(ctk.CTkToplevel):
 
         self.title("Edit Profile")
         self.geometry("420x420")
-        self.configure(fg_color=Colors.BACKGROUND)
+        self.configure(fg_color=Colors.SURFACE)
 
         ctk.CTkLabel(
             self,

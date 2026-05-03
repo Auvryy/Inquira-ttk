@@ -9,11 +9,11 @@ class PrimaryEntry(ctk.CTkEntry):
         super().__init__(
             parent,
             placeholder_text=placeholder,
-            fg_color=Colors.INPUT,
-            text_color=Colors.PRIMARY_TEXT,
-            border_color=Colors.PRIMARY,
-            border_width=2,
-            corner_radius=8,
+            fg_color=Colors.CARD,
+            text_color=Colors.TEXT_DARK,
+            border_color=Colors.BORDER_LIGHT,
+            border_width=1,
+            corner_radius=10,
             show="*" if is_password else "",
             **kwargs,
         )

@@ -13,7 +13,7 @@ from models.survey_creation import SurveyCreation
 
 class CreateSurveyPage(ctk.CTkFrame):
     def __init__(self, parent, app):
-        super().__init__(parent, fg_color=Colors.BACKGROUND)
+        super().__init__(parent, fg_color=Colors.SURFACE)
         self.app = app
         self.available_tags = [
             "Academic",
@@ -46,14 +46,14 @@ class CreateSurveyPage(ctk.CTkFrame):
         self.columnconfigure(0, weight=1)
         self.rowconfigure(1, weight=1)
 
-        self.header = ctk.CTkFrame(self, fg_color=Colors.BACKGROUND)
+        self.header = ctk.CTkFrame(self, fg_color=Colors.SURFACE)
         self.header.grid(row=0, column=0, sticky="ew", padx=24, pady=(18, 6))
         self.header.columnconfigure(0, weight=1)
 
         self.step_label = ctk.CTkLabel(
             self.header,
             text="Step 1 of 4",
-            text_color=Colors.SECONDARY_TEXT,
+            text_color=Colors.TEXT_MUTED,
             font=app.fonts["small"],
         )
         self.step_label.grid(row=0, column=0, sticky="w")
@@ -61,26 +61,26 @@ class CreateSurveyPage(ctk.CTkFrame):
         self.step_title = ctk.CTkLabel(
             self.header,
             text="Survey Details",
-            text_color=Colors.PRIMARY_TEXT,
+            text_color=Colors.TEXT_DARK,
             font=app.fonts["heading"],
         )
         self.step_title.grid(row=1, column=0, sticky="w", pady=(2, 0))
 
-        self.step_container = ctk.CTkFrame(self, fg_color=Colors.BACKGROUND)
+        self.step_container = ctk.CTkFrame(self, fg_color=Colors.SURFACE)
         self.step_container.grid(row=1, column=0, sticky="nsew", padx=24)
         self.step_container.columnconfigure(0, weight=1)
 
-        self.footer = ctk.CTkFrame(self, fg_color=Colors.BACKGROUND)
+        self.footer = ctk.CTkFrame(self, fg_color=Colors.SURFACE)
         self.footer.grid(row=2, column=0, sticky="ew", padx=24, pady=(8, 18))
         self.footer.columnconfigure(1, weight=1)
 
         self.back_button = ctk.CTkButton(
             self.footer,
             text="Back",
-            fg_color=Colors.SECONDARY_BG,
-            text_color=Colors.PRIMARY,
+            fg_color=Colors.CARD,
+            text_color=Colors.CUSTOM_BLUE,
             border_width=2,
-            border_color=Colors.PRIMARY,
+            border_color=Colors.CUSTOM_BLUE,
             command=self._previous_step,
             width=120,
         )
@@ -115,7 +115,13 @@ class CreateSurveyPage(ctk.CTkFrame):
     def _build_details_step(self):
         self.step_title.configure(text="Survey Details")
 
-        frame = ctk.CTkFrame(self.step_container, fg_color=Colors.BACKGROUND)
+        frame = ctk.CTkFrame(
+            self.step_container,
+            fg_color=Colors.CARD,
+            corner_radius=16,
+            border_width=1,
+            border_color=Colors.BORDER_LIGHT,
+        )
         frame.grid(row=0, column=0, sticky="nsew")
         frame.columnconfigure(0, weight=1)
 
@@ -127,12 +133,19 @@ class CreateSurveyPage(ctk.CTkFrame):
         self.caption_entry.insert(0, self.draft.caption)
         self.caption_entry.grid(row=1, column=0, sticky="ew", pady=(0, 10))
 
-        self.description_box = ctk.CTkTextbox(frame, height=120, fg_color=Colors.INPUT)
+        self.description_box = ctk.CTkTextbox(
+            frame,
+            height=120,
+            fg_color=Colors.SURFACE,
+            text_color=Colors.TEXT_DARK,
+            border_width=1,
+            border_color=Colors.BORDER_LIGHT,
+        )
         if self.draft.description:
             self.description_box.insert("1.0", self.draft.description)
         self.description_box.grid(row=2, column=0, sticky="ew", pady=(0, 14))
 
-        time_frame = ctk.CTkFrame(frame, fg_color=Colors.BACKGROUND)
+        time_frame = ctk.CTkFrame(frame, fg_color=Colors.CARD)
         time_frame.grid(row=3, column=0, sticky="w", pady=(0, 12))
         ctk.CTkLabel(
             time_frame,
@@ -147,7 +160,7 @@ class CreateSurveyPage(ctk.CTkFrame):
         self.time_menu.set(str(self.draft.time_to_complete))
         self.time_menu.pack(side="left")
 
-        tags_frame = ctk.CTkFrame(frame, fg_color=Colors.BACKGROUND)
+        tags_frame = ctk.CTkFrame(frame, fg_color=Colors.CARD)
         tags_frame.grid(row=4, column=0, sticky="w")
         ctk.CTkLabel(
             tags_frame,
@@ -157,7 +170,7 @@ class CreateSurveyPage(ctk.CTkFrame):
         ).grid(row=0, column=0, sticky="w")
 
         self.tag_chips = []
-        chip_container = ctk.CTkFrame(tags_frame, fg_color=Colors.BACKGROUND)
+        chip_container = ctk.CTkFrame(tags_frame, fg_color=Colors.CARD)
         chip_container.grid(row=1, column=0, sticky="w", pady=(6, 0))
 
         for idx, tag in enumerate(self.available_tags):
@@ -169,7 +182,13 @@ class CreateSurveyPage(ctk.CTkFrame):
     def _build_audience_step(self):
         self.step_title.configure(text="Target Audience")
 
-        frame = ctk.CTkFrame(self.step_container, fg_color=Colors.BACKGROUND)
+        frame = ctk.CTkFrame(
+            self.step_container,
+            fg_color=Colors.CARD,
+            corner_radius=16,
+            border_width=1,
+            border_color=Colors.BORDER_LIGHT,
+        )
         frame.grid(row=0, column=0, sticky="nsew")
         frame.columnconfigure(0, weight=1)
 
@@ -181,7 +200,7 @@ class CreateSurveyPage(ctk.CTkFrame):
         ).grid(row=0, column=0, sticky="w", pady=(0, 8))
 
         self.audience_chips = []
-        chip_container = ctk.CTkFrame(frame, fg_color=Colors.BACKGROUND)
+        chip_container = ctk.CTkFrame(frame, fg_color=Colors.CARD)
         chip_container.grid(row=1, column=0, sticky="w")
 
         for idx, audience in enumerate(self.available_audiences):
@@ -190,7 +209,7 @@ class CreateSurveyPage(ctk.CTkFrame):
             chip.grid(row=idx // 2, column=idx % 2, padx=6, pady=6)
             self.audience_chips.append(chip)
 
-        custom_frame = ctk.CTkFrame(frame, fg_color=Colors.BACKGROUND)
+        custom_frame = ctk.CTkFrame(frame, fg_color=Colors.CARD)
         custom_frame.grid(row=2, column=0, sticky="w", pady=(12, 0))
 
         self.custom_audience_entry = PrimaryEntry(custom_frame, placeholder="Add custom audience")
@@ -198,9 +217,9 @@ class CreateSurveyPage(ctk.CTkFrame):
         ctk.CTkButton(
             custom_frame,
             text="Add",
-            fg_color=Colors.PRIMARY,
-            hover_color=Colors.SHADED_PRIMARY,
-            text_color=Colors.BACKGROUND,
+            fg_color=Colors.CUSTOM_BLUE,
+            hover_color=Colors.BLUE,
+            text_color=Colors.CARD,
             command=self._add_custom_audience,
             width=80,
         ).pack(side="left")
@@ -208,21 +227,27 @@ class CreateSurveyPage(ctk.CTkFrame):
     def _build_questions_step(self):
         self.step_title.configure(text="Questions")
 
-        frame = ctk.CTkFrame(self.step_container, fg_color=Colors.BACKGROUND)
+        frame = ctk.CTkFrame(
+            self.step_container,
+            fg_color=Colors.CARD,
+            corner_radius=16,
+            border_width=1,
+            border_color=Colors.BORDER_LIGHT,
+        )
         frame.grid(row=0, column=0, sticky="nsew")
         frame.columnconfigure(0, weight=1)
 
         ctk.CTkButton(
             frame,
             text="Add Question",
-            fg_color=Colors.PRIMARY,
-            hover_color=Colors.SHADED_PRIMARY,
-            text_color=Colors.BACKGROUND,
+            fg_color=Colors.CUSTOM_BLUE,
+            hover_color=Colors.BLUE,
+            text_color=Colors.CARD,
             command=self._open_question_dialog,
             width=140,
         ).grid(row=0, column=0, sticky="w", pady=(0, 12))
 
-        self.questions_container = ctk.CTkFrame(frame, fg_color=Colors.BACKGROUND)
+        self.questions_container = ctk.CTkFrame(frame, fg_color=Colors.CARD)
         self.questions_container.grid(row=1, column=0, sticky="nsew")
         self.questions_container.columnconfigure(0, weight=1)
         self._render_questions()
@@ -241,7 +266,13 @@ class CreateSurveyPage(ctk.CTkFrame):
             return
 
         for idx, question in enumerate(self.draft.questions):
-            card = ctk.CTkFrame(self.questions_container, fg_color="white", corner_radius=12, border_width=1, border_color=Colors.BORDER)
+            card = ctk.CTkFrame(
+                self.questions_container,
+                fg_color=Colors.CARD,
+                corner_radius=12,
+                border_width=1,
+                border_color=Colors.BORDER_LIGHT,
+            )
             card.columnconfigure(0, weight=1)
             card.grid(row=idx, column=0, sticky="ew", pady=6)
 
@@ -266,7 +297,7 @@ class CreateSurveyPage(ctk.CTkFrame):
                 text="Remove",
                 fg_color=Colors.PINK,
                 hover_color=Colors.ORANGE,
-                text_color=Colors.BACKGROUND,
+                text_color=Colors.CARD,
                 command=lambda i=idx: self._remove_question(i),
                 width=90,
             ).grid(row=0, column=1, rowspan=2, padx=12, pady=10)
@@ -274,7 +305,13 @@ class CreateSurveyPage(ctk.CTkFrame):
     def _build_review_step(self):
         self.step_title.configure(text="Review & Publish")
 
-        frame = ctk.CTkFrame(self.step_container, fg_color=Colors.BACKGROUND)
+        frame = ctk.CTkFrame(
+            self.step_container,
+            fg_color=Colors.CARD,
+            corner_radius=16,
+            border_width=1,
+            border_color=Colors.BORDER_LIGHT,
+        )
         frame.grid(row=0, column=0, sticky="nsew")
         frame.columnconfigure(0, weight=1)
 

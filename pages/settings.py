@@ -2,18 +2,23 @@ import customtkinter as ctk
 from tkinter import messagebox
 
 from app.theme_colors import Colors
-from pages.archived_surveys import ArchivedSurveysWindow
 from pages.edit_profile import EditProfileWindow
 
 
 class SettingsPage(ctk.CTkFrame):
     def __init__(self, parent, app):
-        super().__init__(parent, fg_color=Colors.BACKGROUND)
+        super().__init__(parent, fg_color=Colors.SURFACE)
         self.app = app
 
         self.columnconfigure(0, weight=1)
 
-        self.profile_card = ctk.CTkFrame(self, fg_color=Colors.SECONDARY_BG, corner_radius=16)
+        self.profile_card = ctk.CTkFrame(
+            self,
+            fg_color=Colors.CARD,
+            corner_radius=16,
+            border_width=1,
+            border_color=Colors.BORDER_LIGHT,
+        )
         self.profile_card.grid(row=0, column=0, sticky="ew", padx=24, pady=(18, 12))
         self.profile_card.columnconfigure(1, weight=1)
 
@@ -22,8 +27,8 @@ class SettingsPage(ctk.CTkFrame):
             text="",
             width=60,
             height=60,
-            fg_color=Colors.PRIMARY,
-            text_color=Colors.BACKGROUND,
+            fg_color=Colors.CUSTOM_BLUE,
+            text_color=Colors.CARD,
             corner_radius=30,
             font=app.fonts["title_md"],
         )
@@ -32,7 +37,7 @@ class SettingsPage(ctk.CTkFrame):
         self.user_label = ctk.CTkLabel(
             self.profile_card,
             text="",
-            text_color=Colors.PRIMARY_TEXT,
+            text_color=Colors.TEXT_DARK,
             font=app.fonts["body_bold"],
         )
         self.user_label.grid(row=0, column=1, sticky="w", padx=(0, 12))
@@ -40,14 +45,14 @@ class SettingsPage(ctk.CTkFrame):
         ctk.CTkButton(
             self.profile_card,
             text="Edit",
-            fg_color=Colors.PRIMARY,
-            hover_color=Colors.SHADED_PRIMARY,
-            text_color=Colors.BACKGROUND,
+            fg_color=Colors.CUSTOM_BLUE,
+            hover_color=Colors.BLUE,
+            text_color=Colors.CARD,
             command=self._edit_profile,
             width=90,
         ).grid(row=0, column=2, padx=18)
 
-        actions = ctk.CTkFrame(self, fg_color=Colors.BACKGROUND)
+        actions = ctk.CTkFrame(self, fg_color=Colors.SURFACE)
         actions.grid(row=1, column=0, sticky="ew", padx=24)
         actions.columnconfigure(0, weight=1)
 
@@ -60,12 +65,12 @@ class SettingsPage(ctk.CTkFrame):
             parent,
             text=text,
             command=command,
-            fg_color=Colors.PINK if danger else Colors.SECONDARY_BG,
-            hover_color=Colors.ORANGE if danger else Colors.BORDER,
-            text_color=Colors.BACKGROUND if danger else Colors.PRIMARY,
-            border_width=0 if danger else 2,
-            border_color=Colors.PRIMARY,
-            corner_radius=10,
+            fg_color=Colors.WARNING if danger else Colors.CARD,
+            hover_color=Colors.ORANGE if danger else Colors.SURFACE,
+            text_color=Colors.CARD if danger else Colors.TEXT_DARK,
+            border_width=0 if danger else 1,
+            border_color=Colors.BORDER_LIGHT,
+            corner_radius=12,
             height=44,
         )
 
@@ -84,4 +89,4 @@ class SettingsPage(ctk.CTkFrame):
         messagebox.showinfo("Not available", "Password changes require backend support.")
 
     def _open_archived(self):
-        ArchivedSurveysWindow(self, self.app)
+        self.app.show_shell_section("archived")

@@ -3,6 +3,7 @@ import customtkinter as ctk
 from app.styles import build_fonts, setup_theme
 from app.theme_colors import Colors
 from app.state import AppState
+from pages.landing import LandingPage
 from pages.login import LoginPage
 from pages.register import RegisterPage
 from pages.shell import ShellPage
@@ -16,13 +17,13 @@ class App(ctk.CTk):
         self.title("Inquira")
         self.geometry("1200x760")
         self.minsize(1100, 700)
-        self.configure(fg_color=Colors.BACKGROUND)
+        self.configure(fg_color=Colors.SURFACE)
 
         self.fonts = build_fonts(self)
         self.state = AppState()
         self.state.load()
 
-        self.container = ctk.CTkFrame(self, fg_color=Colors.BACKGROUND)
+        self.container = ctk.CTkFrame(self, fg_color=Colors.SURFACE)
         self.container.pack(fill="both", expand=True)
         self.container.grid_rowconfigure(0, weight=1)
         self.container.grid_columnconfigure(0, weight=1)
@@ -30,11 +31,11 @@ class App(ctk.CTk):
         self.pages = {}
         self._create_pages()
 
-        start_page = "ShellPage" if self.state.is_authenticated else "LoginPage"
-        self.show_page(start_page)
+        self.show_page("LandingPage")
 
     def _create_pages(self):
         self.pages = {
+            "LandingPage": LandingPage(self.container, self),
             "LoginPage": LoginPage(self.container, self),
             "RegisterPage": RegisterPage(self.container, self),
             "ShellPage": ShellPage(self.container, self),
@@ -66,3 +67,9 @@ class App(ctk.CTk):
     def logout(self):
         self.state.logout()
         self.show_page("LoginPage")
+
+    def show_shell_section(self, key):
+        self.show_page("ShellPage")
+        page = self.pages.get("ShellPage")
+        if page:
+            page.show_section(key)

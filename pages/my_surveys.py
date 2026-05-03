@@ -8,24 +8,24 @@ from pages.survey_responses import SurveyResponsesWindow
 
 class MySurveysPage(ctk.CTkFrame):
     def __init__(self, parent, app):
-        super().__init__(parent, fg_color=Colors.BACKGROUND)
+        super().__init__(parent, fg_color=Colors.SURFACE)
         self.app = app
 
         self.columnconfigure(0, weight=1)
         self.rowconfigure(1, weight=1)
 
-        header = ctk.CTkFrame(self, fg_color=Colors.BACKGROUND)
+        header = ctk.CTkFrame(self, fg_color=Colors.SURFACE)
         header.grid(row=0, column=0, sticky="ew", padx=24, pady=(18, 8))
         header.columnconfigure(0, weight=1)
 
         ctk.CTkLabel(
             header,
             text="Your Surveys",
-            text_color=Colors.PRIMARY_TEXT,
+            text_color=Colors.TEXT_DARK,
             font=app.fonts["heading"],
         ).grid(row=0, column=0, sticky="w")
 
-        self.scroll = ctk.CTkScrollableFrame(self, fg_color=Colors.BACKGROUND)
+        self.scroll = ctk.CTkScrollableFrame(self, fg_color=Colors.SURFACE)
         self.scroll.grid(row=1, column=0, sticky="nsew", padx=24, pady=(0, 24))
         self.scroll.columnconfigure(0, weight=1)
 
@@ -41,7 +41,7 @@ class MySurveysPage(ctk.CTkFrame):
             ctk.CTkLabel(
                 self.scroll,
                 text="You have not created any surveys yet.",
-                text_color=Colors.SECONDARY_TEXT,
+                text_color=Colors.TEXT_MUTED,
                 font=self.app.fonts["body"],
             ).grid(row=0, column=0, pady=40)
             return
@@ -51,13 +51,19 @@ class MySurveysPage(ctk.CTkFrame):
             card.grid(row=idx, column=0, sticky="ew", pady=8)
 
     def _build_card(self, parent, survey):
-        frame = ctk.CTkFrame(parent, fg_color="white", corner_radius=14, border_width=1, border_color=Colors.BORDER)
+        frame = ctk.CTkFrame(
+            parent,
+            fg_color=Colors.CARD,
+            corner_radius=16,
+            border_width=1,
+            border_color=Colors.BORDER_LIGHT,
+        )
         frame.columnconfigure(0, weight=1)
 
         title = ctk.CTkLabel(
             frame,
             text=survey.title,
-            text_color=Colors.PRIMARY_TEXT,
+            text_color=Colors.TEXT_DARK,
             font=self.app.fonts["body_bold"],
         )
         title.grid(row=0, column=0, sticky="w", padx=16, pady=(12, 4))
@@ -66,12 +72,12 @@ class MySurveysPage(ctk.CTkFrame):
         ctk.CTkLabel(
             frame,
             text=f"Created: {created}  |  Responses: {survey.responses}",
-            text_color=Colors.SECONDARY,
+            text_color=Colors.TEXT_MUTED,
             font=self.app.fonts["small"],
         ).grid(row=1, column=0, sticky="w", padx=16)
 
         status_text = "Open" if survey.status else "Closed"
-        status_color = Colors.GREEN if survey.status else Colors.ERROR
+        status_color = Colors.SUCCESS if survey.status else Colors.ERROR
         ctk.CTkLabel(
             frame,
             text=f"Status: {status_text}",
@@ -79,15 +85,15 @@ class MySurveysPage(ctk.CTkFrame):
             font=self.app.fonts["small_bold"],
         ).grid(row=2, column=0, sticky="w", padx=16, pady=(4, 8))
 
-        action_row = ctk.CTkFrame(frame, fg_color="white")
+        action_row = ctk.CTkFrame(frame, fg_color=Colors.CARD)
         action_row.grid(row=3, column=0, sticky="ew", padx=16, pady=(0, 12))
 
         ctk.CTkButton(
             action_row,
             text="Edit",
-            fg_color=Colors.PRIMARY,
-            hover_color=Colors.SHADED_PRIMARY,
-            text_color=Colors.BACKGROUND,
+            fg_color=Colors.CUSTOM_BLUE,
+            hover_color=Colors.BLUE,
+            text_color=Colors.CARD,
             command=lambda s=survey: self._edit_survey(s),
             width=90,
         ).pack(side="left", padx=(0, 10))
@@ -95,10 +101,10 @@ class MySurveysPage(ctk.CTkFrame):
         ctk.CTkButton(
             action_row,
             text="Analytics",
-            fg_color=Colors.SECONDARY_BG,
-            text_color=Colors.PRIMARY,
+            fg_color=Colors.CARD,
+            text_color=Colors.CUSTOM_BLUE,
             border_width=2,
-            border_color=Colors.PRIMARY,
+            border_color=Colors.CUSTOM_BLUE,
             command=lambda s=survey: self._open_analytics(s),
             width=110,
         ).pack(side="left")
